@@ -1,0 +1,38 @@
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #0f4080;
+        }
+
+
+            .search-bar {
+            flex-grow: 1;
+            margin: 0 30px;
+            position: relative;
+
+        }
+
+        .search-bar input {
+            width: 80%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            padding-left: 45px;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
