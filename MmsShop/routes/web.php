@@ -13,8 +13,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // Page d'accueil
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-//Rechercher une annonce
-Route::get('/ads/search', [AdController::class, 'search'])->name('ads.search');
+// Rechercher une annonce
+Route::get('/search', [AdController::class, 'search'])->name('ads.search');
 
 // Register
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
@@ -49,24 +49,23 @@ Route::middleware(['auth'])->group(function () {
 
 // Admin
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-Route::get('/', function () {
-    $search = request('search');
-    $ads = $search
-        ? \App\Models\Ad::where('title', 'LIKE', "%{$search}%")
-                        ->orWhere('category', 'LIKE', "%{$search}%")
-                        ->orWhere('location', 'LIKE', "%{$search}%")
-                        ->orWhere('price', 'LIKE', "%{$search}%")
-                        ->latest()->get()
-        : \App\Models\Ad::latest()->get();
-    return view('admin', compact('ads', 'search'));
-})->name('index');
+    Route::get('/', function () {
+        $search = request('search');
+        $ads = $search
+            ? \App\Models\Ad::where('title', 'LIKE', "%{$search}%")
+                            ->orWhere('category', 'LIKE', "%{$search}%")
+                            ->orWhere('location', 'LIKE', "%{$search}%")
+                            ->orWhere('price', 'LIKE', "%{$search}%")
+                            ->latest()->get()
+            : \App\Models\Ad::latest()->get();
+        return view('admin', compact('ads', 'search'));
+    })->name('index');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/ads/{ad}', [AdController::class, 'show_admin'])->name('ads.show_admin');
 });
-
 
 // Email verification
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
@@ -78,10 +77,6 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-
-Route::get('/search', [AdController::class, 'search'])->name('ads.search');
-Route::resource('ads', AdController::class);
-Route::get('/ads/{ad}/home', [AdController::class, 'show_home'])->name('ads.show_home');
-
 // Ads
 Route::resource('ads', AdController::class);
+Route::get('/ads/{ad}/home', [AdController::class, 'show_home'])->name('ads.show_home');
