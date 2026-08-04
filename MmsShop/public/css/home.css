@@ -83,7 +83,7 @@
 
         .header-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
             padding: 20px 0;
         }
@@ -103,7 +103,7 @@
         }
 /******************************/
         .search-bar {
-            flex-grow: 1;
+            flex-grow: 0.5;
             margin: 0 30px;
             position: relative;
 

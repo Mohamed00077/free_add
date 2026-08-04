@@ -28,7 +28,7 @@
             <div class="py-4 px-4">
               <ul class="space-y-2">
                 <li>
-                  <a href="javascript:void(0)"
+                  <a href="{{route('home')}}"
                     class="text-slate-800 text-[15px] font-medium flex items-center cursor-pointer hover:bg-gray-100 rounded-md px-3 py-2.5 transition-all duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-[18px] h-[18px] mr-3"
                       viewBox="0 0 24 24">
@@ -39,7 +39,7 @@
                         d="M16.32 23.253H7.68a.816.816 0 0 1-.81-.81v-5.4c0-2.83 2.3-5.13 5.13-5.13s5.13 2.3 5.13 5.13v5.4c0 .443-.367.81-.81.81zm-7.83-1.62h7.02v-4.59c0-1.933-1.577-3.51-3.51-3.51s-3.51 1.577-3.51 3.51z"
                         data-original="#000000" />
                     </svg>
-                    <span class="overflow-hidden text-ellipsis whitespace-nowrap">Dashboard</span>
+                    <span class="overflow-hidden text-ellipsis whitespace-nowrap">Home</span>
                     <svg xmlns="http://www.w3.org/2000/svg"
                       class="arrowIcon w-3 fill-current -rotate-90 ml-auto transition-all duration-500"
                       viewBox="0 0 451.847 451.847">

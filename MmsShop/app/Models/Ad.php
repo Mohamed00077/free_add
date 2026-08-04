@@ -24,7 +24,11 @@ public function user()
 
 public function scopeSearch($query, $search)
 {
-    return $query->where('title', 'LIKE', "%{$search}%")
-                 ->orWhere('category', 'LIKE', "%{$search}%"); 
+    return $query->where(function ($q) use ($search) {
+    $q->where('title', 'LIKE', "%{$search}%")
+      ->orWhere('category', 'LIKE', "%{$search}%")
+      ->orWhere('location', 'LIKE', "%{$search}%")
+      ->orWhere('price', 'LIKE', "%{$search}%");
+});
 }
 }

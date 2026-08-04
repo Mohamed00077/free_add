@@ -24,8 +24,16 @@
             </div>
 
             <div class="header-actions">
-                <a href="{{ route('home')}}"><i class="fas fa-user"></i></a>
-                <a href="{{ route('login')}}"><i class="fas fa-plus"></i></a>
+                @auth
+  <a href="{{ route('dashboard')}}"><i class="fas fa-gauge"></i></a>
+@endauth
+
+
+@guest
+   <a href="{{ route('login')}}"><i class="fas fa-user"></i></a>
+@endguest
+                
+                
             </div>
         </div>
     </header>

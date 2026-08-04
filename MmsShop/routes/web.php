@@ -28,16 +28,11 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 // Dashboard
 Route::get('/dashboard', function () {
     $search = request('search');
-    $ads = $search
-        ? \App\Models\Ad::where('user_id', auth()->id())
-                        ->where(function($q) use ($search) {
-                            $q->where('title', 'LIKE', "%{$search}%")
-                              ->orWhere('category', 'LIKE', "%{$search}%")
-                              ->orWhere('location', 'LIKE', "%{$search}%")
-                              ->orWhere('price', 'LIKE', "%{$search}%");
-                        })
-                        ->latest()->get()
-        : \App\Models\Ad::where('user_id', auth()->id())->latest()->get();
+   $ads = $search
+    ? \App\Models\Ad::where('user_id', auth()->id())
+                    ->search($search)
+                    ->latest()->get()
+    : \App\Models\Ad::where('user_id', auth()->id())->latest()->get();
     return view('dashboard', compact('ads', 'search'));
 })->middleware(['auth'])->name('dashboard');
 
@@ -52,13 +47,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/', function () {
         $search = request('search');
         $ads = $search
-            ? \App\Models\Ad::where('title', 'LIKE', "%{$search}%")
-                            ->orWhere('category', 'LIKE', "%{$search}%")
-                            ->orWhere('location', 'LIKE', "%{$search}%")
-                            ->orWhere('price', 'LIKE', "%{$search}%")
-                            ->latest()->get()
+            ? \App\Models\Ad::search($search)->latest()->get()
             : \App\Models\Ad::latest()->get();
         return view('admin', compact('ads', 'search'));
+        
     })->name('index');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');

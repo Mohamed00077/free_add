@@ -125,13 +125,7 @@ public function search(Request $request)
     $search = $request->get('search');
 
     if ($search) {
-        $ads = Ad::query()
-            ->where('title', 'LIKE', "%{$search}%")
-            ->orWhere('category', 'LIKE', "%{$search}%") 
-            ->orWhere('price', 'LIKE', "%{$search}%")
-            ->orWhere('location', 'LIKE', "%{$search}%")
-            ->latest()
-            ->get();
+    $ads = Ad::search($search)->get();
     } else {
         $ads = Ad::latest()->get();
     }
