@@ -13,17 +13,29 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 // Page d'accueil
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+
+
 // Rechercher une annonce
 Route::get('/search', [AdController::class, 'search'])->name('ads.search');
+
+
 
 // Register
 Route::get('/register', [RegisterController::class, 'index'])->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
+
+
+
 // Login / Logout
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/auth/google/redirect', [GoogleController::class, 'redirect'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
+
+
 
 // Dashboard
 Route::get('/dashboard', function () {
@@ -36,11 +48,18 @@ Route::get('/dashboard', function () {
     return view('dashboard', compact('ads', 'search'));
 })->middleware(['auth'])->name('dashboard');
 
+
+
+
 // Profile
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
+
+
+
+
 
 // Admin
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -59,6 +78,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/ads/{ad}', [AdController::class, 'show_admin'])->name('ads.show_admin');
 });
 
+
+
+
+
 // Email verification
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
@@ -68,6 +91,9 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
+
+
+
 
 // Ads
 Route::resource('ads', AdController::class);

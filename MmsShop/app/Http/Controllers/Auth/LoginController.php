@@ -12,6 +12,7 @@ class LoginController extends Controller
         return view ('auth.login');
     }
 
+
     //traiter le formiulaire de connexion
     public function store (Request $request){
         //Validation des champs
@@ -24,13 +25,12 @@ class LoginController extends Controller
         //auth()->attempt() laravel verifie si l'email et mdp coreespondent à un user dans la bd
         //request->only('email', 'password') signifie qu'on prend uniquement email et mdp du formulaire pour la verifiaction
         // true si ça corresspond, false dans le cas contraire
-        if(auth()->attempt($request->only('email', 'password'))) {
+        if(auth()->attempt($request->only('email', 'password'), $request->boolean('remember'))) {
 
             //régénérer l'id de session après la connexion. mesure de sécurité contre les voleurs d'identifiant de session avant la connexion du user pour accéder à son compte 
             $request->session()->regenerate();
 
             // Vérifier si l'utilisateur est un administrateur
-            // (Assurez-vous d'avoir une colonne 'role' ou 'is_admin' dans votre table users)
             if (auth()->user()->role === 'admin') {
                 return redirect('/admin');
             }
@@ -45,6 +45,8 @@ class LoginController extends Controller
             'email' => 'Ces identifiants ne correspondent pas.',
         ]);
     }
+
+
 
     public function logout(Request $request){
         //deconnecter l'utilisateur. laravel supprime ses informations de la session.
