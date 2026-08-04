@@ -13,6 +13,7 @@ class Ad extends Model
     'description',
     'price',
     'location',
+    'phone',
     'condition',
     'photo',
 ];

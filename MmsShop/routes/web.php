@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\GoogleController;
 
 // Page d'accueil
 Route::get('/', [HomeController::class, 'index'])->name('home');

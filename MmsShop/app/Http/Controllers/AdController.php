@@ -32,6 +32,7 @@ class AdController extends Controller
             'description' => 'required|string',
             'price'       => 'required|numeric|min:0',
             'location'    => 'required|string',
+            'phone'       => 'required|string',
             'condition'   => 'required|in:new,good,used',
             'photo'       => 'nullable|image|max:2048',
         ]);
@@ -48,6 +49,7 @@ class AdController extends Controller
             'description' => $request->description,
             'price'       => $request->price,
             'location'    => $request->location,
+            'phone'       => $request->phone ,
             'condition'   => $request->condition,
             'photo'       => $photoPath,
         ]);
@@ -93,6 +95,7 @@ class AdController extends Controller
             'description' => 'required|string',
             'price'       => 'required|numeric|min:0',
             'location'    => 'required|string',
+            'phone'       => 'required|string',
             'condition'   => 'required|in:new,good,used',
             'photo'       => 'nullable|image|max:2048',
         ]);
