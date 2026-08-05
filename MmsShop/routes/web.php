@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\GoogleController;
+use App\Models\User;
 
 // Page d'accueil
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -65,11 +66,15 @@ Route::middleware(['auth'])->group(function () {
 // Admin
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::get('/', function () {
+        $nombre_annonce = \App\Models\Ad::count();
+        $nombre_users = \App\Models\User::count();
+        $annonce_recentes =\App\Models\Ad::where('created_at', '>=', now()->subDays(7))->count();
+        $users = \App\Models\User::withCount('ads')->latest()->get();
         $search = request('search');
         $ads = $search
             ? \App\Models\Ad::search($search)->latest()->get()
             : \App\Models\Ad::latest()->get();
-        return view('admin', compact('ads', 'search'));
+        return view('admin', compact('ads', 'search', 'nombre_annonce', 'nombre_users', 'annonce_recentes', 'users'));
         
     })->name('index');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
