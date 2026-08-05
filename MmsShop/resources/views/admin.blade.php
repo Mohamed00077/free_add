@@ -216,7 +216,7 @@
                         <table class="w-full text-sm">
                             <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
                                 <tr>
-                                    <th class="px-6 py-3 text-left">#</th>
+                                    <th class="px-6 py-3 text-left">ID</th>
                                     <th class="px-6 py-3 text-left">Nom</th>
                                     <th class="px-6 py-3 text-left">Email</th>
                                     <th class="px-6 py-3 text-left">Rôle</th>
@@ -279,11 +279,11 @@
 
     <script>
         function showSection(name, btn) {
-            // Cache toutes les sections, affiche seulement celle demandée
+            
             document.querySelectorAll('.table-section').forEach(el => el.classList.add('hidden'));
             document.getElementById('section-' + name).classList.remove('hidden');
 
-            // Met à jour le style actif dans la sidebar
+           
             document.querySelectorAll('.nav-btn').forEach(el => {
                 el.classList.remove('bg-gray-700', 'text-white');
                 el.classList.add('text-gray-300');

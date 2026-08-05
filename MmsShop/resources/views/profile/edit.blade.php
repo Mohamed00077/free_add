@@ -62,7 +62,7 @@
                     class="flex-1 bg-blue-600 text-white py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition">
                     Sauvegarder
                 </button>
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ url()->previous() }}"
                     class="flex-1 text-center bg-gray-100 text-gray-700 py-2 rounded-md text-sm font-semibold hover:bg-gray-200 transition">
                     Retour
                 </a>
