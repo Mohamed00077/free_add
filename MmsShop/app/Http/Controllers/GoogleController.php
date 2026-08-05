@@ -24,7 +24,9 @@ public function callback()
     }
    
     auth()->login($user);
-    
+    if(auth()->user()->role ==='admin'){
+        return redirect('/admin');
+    }
     return redirect('/dashboard');
 }
 
