@@ -58,6 +58,24 @@
                        class="w-full border rounded px-3 py-2 mt-1">
             </div>
 
+
+
+
+
+
+ <div>
+                <label class="block text-sm font-medium">Numero</label>
+                <input type="text" name="phone" value="{{ old('phone', $ad->phone) }}"
+                       class="w-full border rounded px-3 py-2 mt-1">
+                @error('phone')
+                    <p class="text-red-500 text-xs">{{ $message }}</p>
+                @enderror
+            </div>
+
+
+
+
+
             <div>
                 <label class="block text-sm font-medium">État</label>
                 <select name="condition" class="w-full border rounded px-3 py-2 mt-1">

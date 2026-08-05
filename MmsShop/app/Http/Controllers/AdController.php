@@ -108,7 +108,7 @@ class AdController extends Controller
         $ad->update($request->except('photo'));
         $ad->save();
 
-        return redirect()->route('dashboard', $ad)->with('success', 'Annonce modifiée !');
+        return redirect()->route('dashboard')->with('success', 'Annonce modifiée !');
     }
 
     // Supprime une annonce
