@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\GoogleController;
 use App\Models\User;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 
 // Page d'accueil
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -48,7 +49,7 @@ Route::get('/dashboard', function () {
                     ->latest()->get()
     : \App\Models\Ad::where('user_id', auth()->id())->latest()->get();
     return view('dashboard', compact('ads', 'search'));
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 
@@ -97,6 +98,13 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
+
+Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+    ->middleware(['auth', 'throttle:6,1'])
+    ->name('verification.send');
+
+
+
 
 
 

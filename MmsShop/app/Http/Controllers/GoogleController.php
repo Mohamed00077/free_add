@@ -20,6 +20,7 @@ public function callback()
             'login' => $googleUser->name,
             'email' => $googleUser->email,
             'password' => null,
+            'email_verified_at' => now(),
         ]);
     }
    
