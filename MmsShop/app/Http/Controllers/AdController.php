@@ -57,25 +57,20 @@ class AdController extends Controller
         return redirect()->route('dashboard')->with('success', 'Annonce publiée !');
     }
 
-    // Afficher une annonce
-    public function show(Ad $ad)
-    {
-         $ad->load('user'); 
-        return view('ads.show', compact('ad'));
-    }
-    //Sur la page admin
-       public function show_admin(Ad $ad)
-    {
-         $ad->load('user'); 
-        return view('ads.show_admin', compact('ad'));
-    }
 
-    //Sur la page Home 
- public function show_home(Ad $ad)
+
+
+
+public function show(Ad $ad, string $view = 'ads.show')
 {
     $ad->load('user');
-    return view('ads.show_home', compact('ad'));
+    return view($view, compact('ad'));
 }
+
+
+
+
+
 
     // Formulaire de modification d'annonce
     public function edit(Ad $ad)
@@ -111,10 +106,13 @@ class AdController extends Controller
         return redirect()->route('dashboard')->with('success', 'Annonce modifiée !');
     }
 
+
+
+
     // Supprime une annonce
     public function destroy(Ad $ad)
     {
-        if (Auth::id() !== $ad->user_id) abort(403);
+        if (Auth::id() !== $ad->user_id && auth()->user()->role !== 'admin') abort(403);
         if ($ad->photo) Storage::disk('public')->delete($ad->photo);
         $ad->delete();
         return redirect()->route('home')->with('success', 'Annonce supprimée !');

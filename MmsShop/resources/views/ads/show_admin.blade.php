@@ -35,15 +35,10 @@
                 Publié par <strong>{{ $ad->user->login }}</strong>
             </div>
             <div class="mt-4 text-sm text-gray-400">
-               contact <strong>{{ $ad->user->phone }}</strong>
+               contact <strong>{{ $ad->phone }}</strong>
             </div>
 
-            @if(Auth::id() === $ad->user_id)
                 <div class="flex gap-3 mt-6">
-                    <a href="{{ route('ads.edit', $ad) }}"
-                       class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
-                         Modifier
-                    </a>
                     <form method="POST" action="{{ route('ads.destroy', $ad) }}">
                         @csrf
                         @method('DELETE')
@@ -54,7 +49,7 @@
                         </button>
                     </form>
                 </div>
-            @endif
+         
         </div>
     </div> 
 </body>

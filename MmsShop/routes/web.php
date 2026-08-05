@@ -76,7 +76,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::get('/ads/{ad}', [AdController::class, 'show_admin'])->name('ads.show_admin');
+    Route::get('/ads/{ad}', [AdController::class, 'show'])->name('ads.show_admin')->defaults('view', 'ads.show_admin');
 });
 
 
@@ -97,5 +97,5 @@ Route::get('/email/verify', function () {
 
 
 // Ads
+Route::get('/ads/home/{ad}', [AdController::class, 'show'])->name('ads.show_home')->defaults('view', 'ads.show_home');
 Route::resource('ads', AdController::class);
-Route::get('/ads/{ad}/home', [AdController::class, 'show_home'])->name('ads.show_home');
