@@ -25,25 +25,25 @@
 
 
 
-FROM richarvey/nginx-php-fpm:3.1.6
+FROM php:8.3-cli
 
+# Installer les outils système et extensions PHP nécessaires
+RUN apt-get update && apt-get install -y \
+    git unzip libzip-dev libpng-dev libonig-dev \
+    && docker-php-ext-install pdo_mysql mbstring zip gd \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installer Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
 COPY . .
 
-# Config de l'image
-ENV SKIP_COMPOSER=0
-ENV WEBROOT=/var/www/html/public
-ENV PHP_ERRORS_STDERR=1
-ENV RUN_SCRIPTS=1
-ENV REAL_IP_HEADER=1
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Config Laravel
-ENV APP_ENV=production
-ENV APP_DEBUG=false
-ENV LOG_CHANNEL=stderr
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Autorise Composer à tourner en root dans le conteneur
-ENV COMPOSER_ALLOW_SUPERUSER=1
-
-CMD ["/start.sh"]
+CMD ["docker-entrypoint.sh"]
 
 
