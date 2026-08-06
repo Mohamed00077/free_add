@@ -9,8 +9,8 @@
 <body>
         <div class="max-w-xl mx-auto py-8 px-4">
 
-        <a href="{{ route('admin.users.index') }}"
-           class="text-blue-600 hover:underline text-sm">← Retour</a>
+       <a href="{{ route('admin.index') }}"
+   class="text-blue-600 hover:underline text-sm">← Retour</a>
 
         <div class="bg-white rounded shadow p-6 mt-4">
             <h1 class="text-xl font-bold mb-2">Modifier le rôle</h1>

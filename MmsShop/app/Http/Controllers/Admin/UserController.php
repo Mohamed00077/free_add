@@ -8,12 +8,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        $users = User::latest()->get();
-        return view('ads.users.index', compact('users'));
-    }
-
+   
     public function edit(User $user)
     {
         return view('ads.users.edit_user', compact('user'));
@@ -26,12 +21,12 @@ class UserController extends Controller
         ]);
 
         $user->update($request->only('role'));
-        return redirect()->route('admin.users.index')->with('success', 'Utilisateur modifié.');
+        return redirect()->route('admin.index')->with('success', 'Utilisateur modifié.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users.index')->with('success', 'Utilisateur supprimé.');
+        return redirect()->route('admin.index')->with('success', 'Utilisateur supprimé.');
     }
 }
