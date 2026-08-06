@@ -39,7 +39,8 @@ class AdController extends Controller
 
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos', 'public');
+            // $photoPath = $request->file('photo')->store('photos', 'public');
+            $photoPath = $request->file('photo')->store('photos', config('filesystems.default'));
         }
 
         Ad::create([
@@ -79,6 +80,9 @@ public function show(Ad $ad, string $view = 'ads.show')
         return view('ads.edit', compact('ad'));
     }
 
+
+
+
     // mise à jour des annonces 
     public function update(Request $request, Ad $ad)
     {
@@ -96,8 +100,10 @@ public function show(Ad $ad, string $view = 'ads.show')
         ]);
 
         if ($request->hasFile('photo')) {
-            if ($ad->photo) Storage::disk('public')->delete($ad->photo);
-            $ad->photo = $request->file('photo')->store('photos', 'public');
+            // if ($ad->photo) Storage::disk('public')->delete($ad->photo);
+            if ($ad->photo) Storage::disk(config('filesystems.default'))->delete($ad->photo);
+            // $ad->photo = $request->file('photo')->store('photos', 'public');
+            $ad->photo = $request->file('photo')->store('photos', config('filesystems.default'));
         }
 
         $ad->update($request->except('photo'));
@@ -113,7 +119,8 @@ public function show(Ad $ad, string $view = 'ads.show')
     public function destroy(Ad $ad)
     {
         if (Auth::id() !== $ad->user_id && auth()->user()->role !== 'admin') abort(403);
-        if ($ad->photo) Storage::disk('public')->delete($ad->photo);
+        // if ($ad->photo) Storage::disk('public')->delete($ad->photo);
+        if ($ad->photo) Storage::disk(config('filesystems.default'))->delete($ad->photo);
         $ad->delete();
         return redirect()->route('home')->with('success', 'Annonce supprimée !');
     }
