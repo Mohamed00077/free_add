@@ -116,14 +116,29 @@ public function show(Ad $ad, string $view = 'ads.show')
 
 
     // Supprime une annonce
+    // public function destroy(Ad $ad)
+    // {
+    //     if (Auth::id() !== $ad->user_id && auth()->user()->role !== 'admin') abort(403);
+    //     // if ($ad->photo) Storage::disk('public')->delete($ad->photo);
+    //     if ($ad->photo) Storage::disk(config('filesystems.default'))->delete($ad->photo);
+    //     $ad->delete();
+    //     return back()->with('success', 'Annonce supprimée !');
+    // }
+
+
+
     public function destroy(Ad $ad)
-    {
-        if (Auth::id() !== $ad->user_id && auth()->user()->role !== 'admin') abort(403);
-        // if ($ad->photo) Storage::disk('public')->delete($ad->photo);
-        if ($ad->photo) Storage::disk(config('filesystems.default'))->delete($ad->photo);
-        $ad->delete();
-        return redirect()->route('home')->with('success', 'Annonce supprimée !');
+{
+    if (Auth::id() !== $ad->user_id && auth()->user()->role !== 'admin') abort(403);
+    if ($ad->photo) Storage::disk(config('filesystems.default'))->delete($ad->photo);
+    $ad->delete();
+
+    if (auth()->user()->role === 'admin') {
+        return redirect()->route('admin.index')->with('success', 'Annonce supprimée !');
     }
+
+    return redirect()->route('dashboard')->with('success', 'Annonce supprimée !');
+}
 
 
 

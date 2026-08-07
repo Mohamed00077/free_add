@@ -25,7 +25,7 @@
 
             <div class="header-actions">
                 @auth
-  <a href="{{ route('dashboard')}}"><i class="fas fa-gauge"></i></a>
+  <a href="{{ auth()->user()->role === 'admin' ? route('admin.index') : route('dashboard') }}">Dashboard</a>
 @endauth
 
 
